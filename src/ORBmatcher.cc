@@ -1485,7 +1485,7 @@ int ORBmatcher::SearchBySim3(KeyFrame *pKF1, KeyFrame *pKF2, vector<MapPoint*> &
             vbAlreadyMatched1[i]=true;
             // 得到该地图点在关键帧pkF2 中的id
             int idx2 = pMP->GetIndexInKeyFrame(pKF2);
-            if(idx2>=0 && idx2<N2)
+            if(idx2>=0 && idx2<N2) // 关键帧在有效范围内
                 // pKF2中第idx2个特征点在pKF1中有匹配
                 vbAlreadyMatched2[idx2]=true;   
         }
@@ -1511,7 +1511,7 @@ int ORBmatcher::SearchBySim3(KeyFrame *pKF1, KeyFrame *pKF2, vector<MapPoint*> &
         // Step 3.1：通过Sim变换，将pKF1的地图点投影到pKF2中的图像坐标
         cv::Mat p3Dw = pMP->GetWorldPos();
         // 把pKF1的地图点从world坐标系变换到camera1坐标系
-        cv::Mat p3Dc1 = R1w*p3Dw + t1w;
+        cv::Mat p3Dc1 = R1w*p3Dw + t1w; 
         // 再通过Sim3将该地图点从camera1变换到camera2坐标系
         cv::Mat p3Dc2 = sR21*p3Dc1 + t21;
 
@@ -1534,7 +1534,7 @@ int ORBmatcher::SearchBySim3(KeyFrame *pKF1, KeyFrame *pKF2, vector<MapPoint*> &
 
         const float maxDistance = pMP->GetMaxDistanceInvariance();
         const float minDistance = pMP->GetMinDistanceInvariance();
-        const float dist3D = cv::norm(p3Dc2);
+        const float dist3D = cv::norm(p3Dc2);  // p3Dc2到相机光心的距离
 
         // Depth must be inside the scale invariance region
         // 深度值在有效范围内
