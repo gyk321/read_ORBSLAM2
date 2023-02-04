@@ -1565,14 +1565,14 @@ int ORBmatcher::SearchBySim3(KeyFrame *pKF1, KeyFrame *pKF2, vector<MapPoint*> &
         {
             const size_t idx = *vit;
 
-            const cv::KeyPoint &kp = pKF2->mvKeysUn[idx];
+            const cv::KeyPoint &kp = pKF2->mvKeysUn[idx]; // mvKeysUn存储的是特征点的坐标信息，包括x、y坐标、角度、尺度
 
-            if(kp.octave<nPredictedLevel-1 || kp.octave>nPredictedLevel)
+            if(kp.octave<nPredictedLevel-1 || kp.octave>nPredictedLevel) // 求的特征点是否在预测的金字塔层级范围内
                 continue;
 
             const cv::Mat &dKF = pKF2->mDescriptors.row(idx);
 
-            const int dist = DescriptorDistance(dMP,dKF);
+            const int dist = DescriptorDistance(dMP,dKF);   // 得到距离
 
             if(dist<bestDist)
             {
