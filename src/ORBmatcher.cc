@@ -1447,11 +1447,12 @@ int ORBmatcher::SearchBySim3(KeyFrame *pKF1, KeyFrame *pKF2, vector<MapPoint*> &
     const float &cx = pKF1->cx;
     const float &cy = pKF1->cy;
 
+
     // Camera 1 from world
     // 从world到camera1的变换
     cv::Mat R1w = pKF1->GetRotation();
     cv::Mat t1w = pKF1->GetTranslation();
-    
+
     //Camera 2 from world
     // 从world到camera2的变换
     cv::Mat R2w = pKF2->GetRotation();
